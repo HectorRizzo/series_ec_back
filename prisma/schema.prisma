@@ -1,0 +1,40 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model capitulos {
+  id            Int        @id
+  numero        String?    @db.VarChar
+  titulo        String?    @db.VarChar
+  descripcion   String?    @db.VarChar
+  temporada_id  Int
+  fecha_ingreso DateTime?  @db.Timestamp(6)
+  estado        String?    @db.VarChar
+  enlace        String?    @db.VarChar
+  temporadas    temporadas @relation(fields: [temporada_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model series {
+  id            Int          @id
+  nombre        String?      @db.VarChar
+  descripcion   String?      @db.VarChar
+  imagen        String?      @db.VarChar
+  fecha_ingreso DateTime?    @db.Timestamp(6)
+  estado        String?      @db.VarChar
+  temporadas    temporadas[]
+}
+
+model temporadas {
+  id            Int         @id
+  numero        String?     @db.VarChar
+  anio          String?     @db.VarChar
+  serie_id      Int
+  fecha_ingreso DateTime?   @db.Timestamp(6)
+  estado        String?     @db.VarChar
+  capitulos     capitulos[]
+  series        series      @relation(fields: [serie_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}

@@ -86,3 +86,12 @@ typings/
 
 # DynamoDB Local files
 .dynamodb/
+
+/generated/prisma
+
+
+.env
+
+# dist
+dist/
+build/
